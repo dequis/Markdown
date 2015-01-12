@@ -22,7 +22,17 @@ class MarkdownServiceProvider extends ServiceProvider {
 
 		$twig = \Config::get('twigbridge::extensions');
 
-		$twig[] = 'Lablog\Markdown\Twig\MarkdownLoader';
+		$class = 'Lablog\Markdown\Twig\MarkdownLoader';
+		if (isset($twig['enabled']))
+		{
+			/* TwigBridge 0.6 */
+			$twig['enabled'][] = $class;
+		}
+		else
+		{
+			/* TwigBridge 0.5 */
+			$twig[] = $class;
+		}
 
 		\Config::set('twigbridge::extensions', $twig);
 	}
